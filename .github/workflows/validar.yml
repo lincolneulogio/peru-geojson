@@ -21,6 +21,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: python scripts/validate_geojson.py
       - run: python scripts/congelar_version.py --comprobar
+      - run: python -m unittest discover -s python/tests -v
       - run: pnpm variants
 
   visor:

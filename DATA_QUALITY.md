@@ -57,7 +57,9 @@ La generación vigente es la actualización INEI 2023 (descarga del 6 de marzo d
 
 ## Limitaciones conocidas
 
-1. **58 distritos sin capital** (`capital: ""`): ubigeos nuevos sin correspondencia en el histórico 2007. No se inventaron datos.
+1. **58 distritos sin capital** (`capital: ""`): su ubigeo no está en el histórico 2007, así que `NOM_CAP` no tiene par. El cruce `data/equivalencias/ubigeo-2007-2026.json` los separa: 56 `creado` y 2 `reasignado` (Putumayo `160109`→`160801` y Teniente Manuel Clavero `160114`→`160803`, al crearse la provincia `1608`). No se inventaron capitales ni decretos. El `contenedor_2007` de un creado es el polígono 2007 que contiene el centroide 2026: sirve para sumar una serie, no es el distrito madre legal.
 2. **Capitales provinciales IDEP-2016** (10 años): los límites son 2023 pero los puntos son 2016.
 3. **Simplificación**: 0.0005° (~50 m) desplaza micro-límites; no apto para catastro o litigio de linderos. Para eso, usar los GPKG originales en `sources/` (no versionados).
 4. **Raíz intacta**: los 4 `*.geojson` históricos se conservan como insumos (`NOM_CAP`, capitales) y snapshot v1.
+5. **Altitud**: `data/espacial/distritos.json` trae la cota del centroide en Copernicus DEM GLO-90 (Open-Meteo), en metros enteros. No es la altitud de la capital: no hay coordenada de capital distrital. Siete distritos costeros quedan en 0–5 m porque el centroide cae casi al nivel del mar.
+6. **Vecindad**: arcos compartidos del TopoJSON distrital. La Punta (`070105`) no compartía arco tras simplificar a 0.0005°; se unió a Callao (`070101`) porque el vértice más cercano está a 0.000474°. Amantaní (`210103`) y Anapia (`211302`) siguen sin vecino: son islas del Titicaca.

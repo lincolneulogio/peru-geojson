@@ -33,6 +33,9 @@ Esos archivos siguen usando `NOMBDEP`, `FIRST_IDDP`, `NOMBPROV`, `FIRST_IDPR`, `
 | `data/variants/peru.topojson` | TopoJSON cuantizado, cerca de 80% más liviano que el validado. |
 | `data/variants/peru-ubigeo.pmtiles` | Teselas vectoriales para la web. |
 | `data/ubigeo.json` | Índice sin geometría: ubigeo, nombres, capital, bbox y alias. |
+| `data/equivalencias/ubigeo-2007-2026.json` | Cruce completo INEI-2007 ↔ catálogo canónico. |
+| `data/equivalencias/cambios-2007-2026.csv` | Solo las filas que no son `estable`. |
+| `data/espacial/distritos.json` | Centroide, bbox, altitud del centroide y vecinos por distrito. |
 | `data/validated/reporte.json` | Conteo de la normalización. |
 
 `bbox` nacional de los polígonos departamentales: `[-81.328195, -18.350928, -68.652279, -0.038606]` (oeste, sur, este, norte).
@@ -81,7 +84,32 @@ Ejemplo de departamento:
 
 Los tipos TypeScript están en [`types/Ubigeo.ts`](types/Ubigeo.ts).
 
-El GPKG oficial no trae capital. Las de departamento son la sede conocida; las de provincia salen del punto IDEP-2016 (con tres abreviaturas resueltas y dos provincias que ese archivo no trae); las de distrito, del `NOM_CAP` histórico cuando el ubigeo coincide. En esta generación, 58 distritos nuevos quedan con `capital` vacío. El reporte lo cuenta. No se rellenó a mano distrito por distrito.
+El GPKG oficial no trae capital. Las de departamento son la sede conocida; las de provincia salen del punto IDEP-2016 (con tres abreviaturas resueltas y dos provincias que ese archivo no trae); las de distrito, del `NOM_CAP` histórico cuando el ubigeo coincide. En esta generación, 58 distritos quedan con `capital` vacío. El cruce los explica: 56 creados después del extracto 2007 y 2 reasignados a la provincia Putumayo. No se rellenó a mano distrito por distrito.
+
+## Series 2007–2026, altitud y vecinos
+
+`data/equivalencias/ubigeo-2007-2026.json` es el cruce completo (departamentos, provincias y distritos). `cambios-2007-2026.csv` deja solo lo que no es `estable`. El lado 2026 es este catálogo (descarga del 6 de marzo de 2026; el portal dice actualización 2023), no un padrón legal de 2026.
+
+| `tipo` | Qué significa para una serie |
+| --- | --- |
+| `estable` | Mismo código y mismos nombres. El join es directo. |
+| `renombrado` | Mismo código, cambió el nombre (por ejemplo Magdalena Vieja → Pueblo Libre, `150121`). |
+| `reasignado` | Mismo distrito, otro código. Putumayo `160109` → `160801`. |
+| `creado` | No hay código 2007. `contenedor_2007` es el polígono de 2007 que contiene el centroide: agrega la serie, no cita el decreto. |
+
+`data/espacial/distritos.json` junta, por distrito, el centroide (el de `indicadores/geometria.json`), el `bbox`, la altitud del centroide en Copernicus DEM GLO-90 y la lista de vecinos por frontera compartida. La Punta limita con Callao. Amantaní y Anapia no tienen vecino terrestre.
+
+Regenerar:
+
+```bash
+python scripts/equivalencias_ubigeo.py
+python scripts/espacial_distrito.py
+node scripts/sync-package-data.mjs
+```
+
+## Python
+
+El paquete `python/` se importa como `peru_geojson` y lee el mismo `ubigeo.json`. Con GeoPandas: `pip install "peru-geojson[gis]"` y `a_geodataframe("distrital")`. El mapa de nombres con la librería TypeScript está en [python/README.md](python/README.md).
 
 ## Leaflet
 

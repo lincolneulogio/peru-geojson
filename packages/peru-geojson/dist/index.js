@@ -278,5 +278,48 @@ function gentilicio(nombreMinusculas, mapa) {
   const clave = nombreMinusculas.trim().toLowerCase().replace(/\s+/g, " ");
   return mapa[clave] ?? null;
 }
+function dataDir4() {
+  const here = path3.dirname(fileURLToPath(import.meta.url));
+  return path3.resolve(here, "..", "data");
+}
+async function loadEquivalencias() {
+  const raw = await promises.readFile(path3.join(dataDir4(), "equivalencias", "ubigeo-2007-2026.json"), "utf-8");
+  return JSON.parse(raw);
+}
+function cruceUbigeo(tabla, ubigeo, lado) {
+  const clave = lado === "2007" ? "ubigeo_2007" : "ubigeo_2026";
+  return tabla.filas.find((fila) => fila[clave] === ubigeo) ?? null;
+}
+function ubigeoEquivalente(tabla, ubigeo, desde) {
+  const encontrada = cruceUbigeo(tabla, ubigeo, desde);
+  if (!encontrada || encontrada.tipo === "creado" || encontrada.tipo === "sin_par_2026") return null;
+  return desde === "2007" ? encontrada.ubigeo_2026 : encontrada.ubigeo_2007;
+}
+function contenedorGeometrico(tabla, ubigeo2026) {
+  const encontrada = cruceUbigeo(tabla, ubigeo2026, "2026");
+  if (!encontrada || encontrada.tipo !== "creado") return null;
+  return encontrada.contenedor_2007;
+}
+function cambiosUbigeo(tabla) {
+  return tabla.filas.filter((fila) => fila.tipo !== "estable");
+}
+function dataDir5() {
+  const here = path3.dirname(fileURLToPath(import.meta.url));
+  return path3.resolve(here, "..", "data");
+}
+async function loadEspacialDistritos() {
+  const raw = await promises.readFile(path3.join(dataDir5(), "espacial", "distritos.json"), "utf-8");
+  return JSON.parse(raw);
+}
+function registroEspacial(tabla, ubigeo) {
+  return tabla.distritos[ubigeo] ?? null;
+}
+function vecinosDe(tabla, ubigeo) {
+  return tabla.distritos[ubigeo]?.vecinos ?? [];
+}
+function altitudCentroide(tabla, ubigeo) {
+  const valor = tabla.distritos[ubigeo]?.altitud_centroide_m;
+  return valor === void 0 ? null : valor;
+}
 
-export { aNombreOficial, buscarPorNombre, coberturaIndicadores, esUbigeoValido, filtrarFeatures, gentilicio, joinIndicadores, loadCapitales, loadDepartamental, loadDistrital, loadIndicadoresDemo, loadIndicadoresGeo, loadIndicadoresSocio, loadNivel, loadNombres, loadProvincial, loadStats, loadUbigeoIndex, nivelDeUbigeo, normalizarTexto, perteneceA, puntoEnAnillo, puntoEnPoligono, reverseGeocode, ubigeoPadre };
+export { aNombreOficial, altitudCentroide, buscarPorNombre, cambiosUbigeo, coberturaIndicadores, contenedorGeometrico, cruceUbigeo, esUbigeoValido, filtrarFeatures, gentilicio, joinIndicadores, loadCapitales, loadDepartamental, loadDistrital, loadEquivalencias, loadEspacialDistritos, loadIndicadoresDemo, loadIndicadoresGeo, loadIndicadoresSocio, loadNivel, loadNombres, loadProvincial, loadStats, loadUbigeoIndex, nivelDeUbigeo, normalizarTexto, perteneceA, puntoEnAnillo, puntoEnPoligono, registroEspacial, reverseGeocode, ubigeoEquivalente, ubigeoPadre, vecinosDe };

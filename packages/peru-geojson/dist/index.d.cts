@@ -1,5 +1,5 @@
-import { PropiedadesCanonicas, IndiceUbigeo } from './contrato.cjs';
-export { ATRIBUCION, BBox, ColeccionUbigeo, Departamento as DepartamentoRegistro, Distrito as DistritoRegistro, FeatureUbigeo, LICENCIA_DATOS, LICENCIA_DATOS_URL, MetadataGeo, Provincia as ProvinciaRegistro, RegistroUbigeo } from './contrato.cjs';
+import { PropiedadesCanonicas, IndiceUbigeo, BBox } from './contrato.cjs';
+export { ATRIBUCION, ColeccionUbigeo, Departamento as DepartamentoRegistro, Distrito as DistritoRegistro, FeatureUbigeo, LICENCIA_DATOS, LICENCIA_DATOS_URL, MetadataGeo, Provincia as ProvinciaRegistro, RegistroUbigeo } from './contrato.cjs';
 
 /**
  * Tipos públicos de la librería sobre el esquema canónico nuevo
@@ -178,4 +178,76 @@ declare function aNombreOficial(minusculas: string, overrides?: Record<string, s
 /** Gentilicio verificado o null (nunca inventa). Clave en minúsculas sin tildes. */
 declare function gentilicio(nombreMinusculas: string, mapa?: Record<string, string | null>): string | null;
 
-export { type AnyFeature, type AnyProps, type CapitalFeature, type CapitalProps, type CapitalesFC as CapitalesCollection, type DepartamentalFC as DepartamentalCollection, type DepartamentoFeature, type DepartamentoProps, type DistritalFC as DistritalCollection, type DistritoFeature, type DistritoProps, type EstadoIndicadores, type FiltroGeo, type IndicadorGeometrico, type IndicadorSociodemografico, IndiceUbigeo, type Nivel, type NivelUbigeo, PropiedadesCanonicas, type ProvinciaFeature, type ProvinciaProps, type ProvincialFC as ProvincialCollection, type Punto, type ResultadoInverso, type Stats, type TablaGeometria, type TablaIndicadores, type TablasNombres, type Ubigeo, type UbigeoDep, type UbigeoDist, IndiceUbigeo as UbigeoIndex, type UbigeoProv, aNombreOficial, buscarPorNombre, coberturaIndicadores, esUbigeoValido, filtrarFeatures, gentilicio, joinIndicadores, loadCapitales, loadDepartamental, loadDistrital, loadIndicadoresDemo, loadIndicadoresGeo, loadIndicadoresSocio, loadNivel, loadNombres, loadProvincial, loadStats, loadUbigeoIndex, nivelDeUbigeo, normalizarTexto, perteneceA, puntoEnAnillo, puntoEnPoligono, reverseGeocode, ubigeoPadre };
+/** Lado de la serie. 2026 es el catálogo canónico (descarga 2026-03-06), no un padrón legal de ese año. */
+type LadoUbigeo = "2007" | "2026";
+type TipoCambioUbigeo = "estable" | "renombrado" | "reasignado" | "creado" | "sin_par_2026";
+type MetodoContenedor = "centroide_dentro" | "vertice_dentro" | "ambiguo" | "sin_contencion";
+interface FilaEquivalencia {
+    nivel: "departamento" | "provincia" | "distrito";
+    tipo: TipoCambioUbigeo;
+    ubigeo_2007: string | null;
+    ubigeo_2026: string | null;
+    nombre_2007: string;
+    nombre_2026: string;
+    nombre_departamento: string;
+    nombre_provincia_2007: string;
+    nombre_provincia_2026: string;
+    campos: string[];
+    /** Ubigeo 2007 que contiene el centroide. Solo distritos `creado`. No es el decreto. */
+    contenedor_2007: string | null;
+    contenedor_metodo: MetodoContenedor | null;
+}
+interface ResumenEquivalencias {
+    "2007": number;
+    "2026": number;
+    estable: number;
+    renombrado: number;
+    reasignado: number;
+    creado: number;
+    sin_par_2026: number;
+}
+interface TablaEquivalencias {
+    meta: {
+        anio_base: 2007;
+        anio_destino: 2026;
+        [k: string]: unknown;
+    };
+    resumen: Record<"departamento" | "provincia" | "distrito", ResumenEquivalencias>;
+    filas: FilaEquivalencia[];
+}
+declare function loadEquivalencias(): Promise<TablaEquivalencias>;
+/** Fila del código en ese año. Null si el ubigeo no está en el cruce. */
+declare function cruceUbigeo(tabla: TablaEquivalencias, ubigeo: string, lado: LadoUbigeo): FilaEquivalencia | null;
+/**
+ * Código del otro año cuando hay par (estable, renombrado, reasignado).
+ * Un distrito creado no tiene ubigeo 2007: devuelve null. El contenedor
+ * geométrico es otra operación y no sustituye al código.
+ */
+declare function ubigeoEquivalente(tabla: TablaEquivalencias, ubigeo: string, desde: LadoUbigeo): string | null;
+/** Contenedor geométrico 2007 de un distrito creado. Null si no aplica o no hubo contención única. */
+declare function contenedorGeometrico(tabla: TablaEquivalencias, ubigeo2026: string): string | null;
+/** Filas que rompen una serie: todo lo que no es `estable`. */
+declare function cambiosUbigeo(tabla: TablaEquivalencias): FilaEquivalencia[];
+
+interface RegistroEspacialDistrito {
+    centroide: [number, number];
+    bbox: BBox;
+    /** Metros del centroide en Copernicus DEM GLO-90. No es la cota de la capital. */
+    altitud_centroide_m: number | null;
+    vecinos: string[];
+}
+interface TablaEspacialDistritos {
+    meta: {
+        nivel: "distrito";
+        n: number;
+        [k: string]: unknown;
+    };
+    distritos: Record<string, RegistroEspacialDistrito>;
+}
+declare function loadEspacialDistritos(): Promise<TablaEspacialDistritos>;
+declare function registroEspacial(tabla: TablaEspacialDistritos, ubigeo: string): RegistroEspacialDistrito | null;
+/** Vecinos por frontera compartida. Lista vacía si el distrito es isla o no está. */
+declare function vecinosDe(tabla: TablaEspacialDistritos, ubigeo: string): string[];
+declare function altitudCentroide(tabla: TablaEspacialDistritos, ubigeo: string): number | null;
+
+export { type AnyFeature, type AnyProps, BBox, type CapitalFeature, type CapitalProps, type CapitalesFC as CapitalesCollection, type DepartamentalFC as DepartamentalCollection, type DepartamentoFeature, type DepartamentoProps, type DistritalFC as DistritalCollection, type DistritoFeature, type DistritoProps, type EstadoIndicadores, type FilaEquivalencia, type FiltroGeo, type IndicadorGeometrico, type IndicadorSociodemografico, IndiceUbigeo, type LadoUbigeo, type MetodoContenedor, type Nivel, type NivelUbigeo, PropiedadesCanonicas, type ProvinciaFeature, type ProvinciaProps, type ProvincialFC as ProvincialCollection, type Punto, type RegistroEspacialDistrito, type ResultadoInverso, type ResumenEquivalencias, type Stats, type TablaEquivalencias, type TablaEspacialDistritos, type TablaGeometria, type TablaIndicadores, type TablasNombres, type TipoCambioUbigeo, type Ubigeo, type UbigeoDep, type UbigeoDist, IndiceUbigeo as UbigeoIndex, type UbigeoProv, aNombreOficial, altitudCentroide, buscarPorNombre, cambiosUbigeo, coberturaIndicadores, contenedorGeometrico, cruceUbigeo, esUbigeoValido, filtrarFeatures, gentilicio, joinIndicadores, loadCapitales, loadDepartamental, loadDistrital, loadEquivalencias, loadEspacialDistritos, loadIndicadoresDemo, loadIndicadoresGeo, loadIndicadoresSocio, loadNivel, loadNombres, loadProvincial, loadStats, loadUbigeoIndex, nivelDeUbigeo, normalizarTexto, perteneceA, puntoEnAnillo, puntoEnPoligono, registroEspacial, reverseGeocode, ubigeoEquivalente, ubigeoPadre, vecinosDe };

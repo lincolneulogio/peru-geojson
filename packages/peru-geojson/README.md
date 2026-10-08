@@ -32,7 +32,7 @@ filtrarFeatures(dist.features, { nivel: "distrital", dep: "15", q: "santa anita"
 
 Esquema canónico por feature: `ubigeo`, `nombre_departamento`, `nombre_provincia`, `nombre_distrito`, `capital` (minúsculas, sin tildes). Detalle del contrato en `contrato.ts` (subpath `./contrato`).
 
-Datos incluidos (`data/`): `peru-*.min.geojson` + `ubigeo.json` + reportes + `indicadores/` (geometría real, sociodemográficos, demo) + `nombres/` (sobreescrituras, gentilicios).
+Datos incluidos (`data/`): `peru-*.min.geojson` + `ubigeo.json` + reportes + `indicadores/` + `nombres/` + `equivalencias/ubigeo-2007-2026.json` + `espacial/distritos.json`.
 
 ## P0: indicadores, reversa y nombres
 
@@ -59,3 +59,25 @@ gentilicio("lima", gentilicios); // "limeño"
 ```
 
 API web: `GET /api/reverse?lat=&lng=[&cercano=1]`.
+
+## Series y vecindad
+
+```ts
+import {
+  altitudCentroide,
+  contenedorGeometrico,
+  loadEquivalencias,
+  loadEspacialDistritos,
+  ubigeoEquivalente,
+  vecinosDe,
+} from "peru-geojson";
+
+const cruce = await loadEquivalencias();
+ubigeoEquivalente(cruce, "160109", "2007"); // "160801"
+ubigeoEquivalente(cruce, "070107", "2026"); // null: Mi Perú no existía en 2007
+contenedorGeometrico(cruce, "070107"); // "070106", inferido por el centroide
+
+const espacial = await loadEspacialDistritos();
+vecinosDe(espacial, "150101");
+altitudCentroide(espacial, "150101"); // metros del centroide, no de la capital
+```

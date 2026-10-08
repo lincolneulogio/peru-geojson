@@ -289,13 +289,60 @@ function gentilicio(nombreMinusculas, mapa) {
   const clave = nombreMinusculas.trim().toLowerCase().replace(/\s+/g, " ");
   return mapa[clave] ?? null;
 }
+function dataDir4() {
+  const here = path3__default.default.dirname(url.fileURLToPath((typeof document === 'undefined' ? require('u' + 'rl').pathToFileURL(__filename).href : (_documentCurrentScript && _documentCurrentScript.tagName.toUpperCase() === 'SCRIPT' && _documentCurrentScript.src || new URL('index.cjs', document.baseURI).href))));
+  return path3__default.default.resolve(here, "..", "data");
+}
+async function loadEquivalencias() {
+  const raw = await fs.promises.readFile(path3__default.default.join(dataDir4(), "equivalencias", "ubigeo-2007-2026.json"), "utf-8");
+  return JSON.parse(raw);
+}
+function cruceUbigeo(tabla, ubigeo, lado) {
+  const clave = lado === "2007" ? "ubigeo_2007" : "ubigeo_2026";
+  return tabla.filas.find((fila) => fila[clave] === ubigeo) ?? null;
+}
+function ubigeoEquivalente(tabla, ubigeo, desde) {
+  const encontrada = cruceUbigeo(tabla, ubigeo, desde);
+  if (!encontrada || encontrada.tipo === "creado" || encontrada.tipo === "sin_par_2026") return null;
+  return desde === "2007" ? encontrada.ubigeo_2026 : encontrada.ubigeo_2007;
+}
+function contenedorGeometrico(tabla, ubigeo2026) {
+  const encontrada = cruceUbigeo(tabla, ubigeo2026, "2026");
+  if (!encontrada || encontrada.tipo !== "creado") return null;
+  return encontrada.contenedor_2007;
+}
+function cambiosUbigeo(tabla) {
+  return tabla.filas.filter((fila) => fila.tipo !== "estable");
+}
+function dataDir5() {
+  const here = path3__default.default.dirname(url.fileURLToPath((typeof document === 'undefined' ? require('u' + 'rl').pathToFileURL(__filename).href : (_documentCurrentScript && _documentCurrentScript.tagName.toUpperCase() === 'SCRIPT' && _documentCurrentScript.src || new URL('index.cjs', document.baseURI).href))));
+  return path3__default.default.resolve(here, "..", "data");
+}
+async function loadEspacialDistritos() {
+  const raw = await fs.promises.readFile(path3__default.default.join(dataDir5(), "espacial", "distritos.json"), "utf-8");
+  return JSON.parse(raw);
+}
+function registroEspacial(tabla, ubigeo) {
+  return tabla.distritos[ubigeo] ?? null;
+}
+function vecinosDe(tabla, ubigeo) {
+  return tabla.distritos[ubigeo]?.vecinos ?? [];
+}
+function altitudCentroide(tabla, ubigeo) {
+  const valor = tabla.distritos[ubigeo]?.altitud_centroide_m;
+  return valor === void 0 ? null : valor;
+}
 
 exports.ATRIBUCION = ATRIBUCION;
 exports.LICENCIA_DATOS = LICENCIA_DATOS;
 exports.LICENCIA_DATOS_URL = LICENCIA_DATOS_URL;
 exports.aNombreOficial = aNombreOficial;
+exports.altitudCentroide = altitudCentroide;
 exports.buscarPorNombre = buscarPorNombre;
+exports.cambiosUbigeo = cambiosUbigeo;
 exports.coberturaIndicadores = coberturaIndicadores;
+exports.contenedorGeometrico = contenedorGeometrico;
+exports.cruceUbigeo = cruceUbigeo;
 exports.esUbigeoValido = esUbigeoValido;
 exports.filtrarFeatures = filtrarFeatures;
 exports.gentilicio = gentilicio;
@@ -303,6 +350,8 @@ exports.joinIndicadores = joinIndicadores;
 exports.loadCapitales = loadCapitales;
 exports.loadDepartamental = loadDepartamental;
 exports.loadDistrital = loadDistrital;
+exports.loadEquivalencias = loadEquivalencias;
+exports.loadEspacialDistritos = loadEspacialDistritos;
 exports.loadIndicadoresDemo = loadIndicadoresDemo;
 exports.loadIndicadoresGeo = loadIndicadoresGeo;
 exports.loadIndicadoresSocio = loadIndicadoresSocio;
@@ -316,5 +365,8 @@ exports.normalizarTexto = normalizarTexto;
 exports.perteneceA = perteneceA;
 exports.puntoEnAnillo = puntoEnAnillo;
 exports.puntoEnPoligono = puntoEnPoligono;
+exports.registroEspacial = registroEspacial;
 exports.reverseGeocode = reverseGeocode;
+exports.ubigeoEquivalente = ubigeoEquivalente;
 exports.ubigeoPadre = ubigeoPadre;
+exports.vecinosDe = vecinosDe;

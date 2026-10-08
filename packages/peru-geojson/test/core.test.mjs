@@ -4,8 +4,12 @@ import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 import {
   aNombreOficial,
+  altitudCentroide,
   buscarPorNombre,
+  cambiosUbigeo,
   coberturaIndicadores,
+  contenedorGeometrico,
+  cruceUbigeo,
   esUbigeoValido,
   filtrarFeatures,
   gentilicio,
@@ -14,7 +18,9 @@ import {
   normalizarTexto,
   perteneceA,
   reverseGeocode,
+  ubigeoEquivalente,
   ubigeoPadre,
+  vecinosDe,
 } from "../dist/index.js";
 
 const dataUrl = (f) => new URL(`../data/${f}`, import.meta.url);
@@ -140,5 +146,46 @@ describe("nombres oficiales", () => {
     assert.equal(gentilicio("lima", gent), "limeño");
     assert.equal(gentilicio("madre de dios", gent), null);
     assert.equal(gentilicio("inventado", gent), null);
+  });
+});
+
+describe("equivalencias 2007-2026", () => {
+  const tabla = leer("equivalencias/ubigeo-2007-2026.json");
+
+  it("cierra los 58 distritos sin capital: 56 creados y 2 reasignados", () => {
+    const d = tabla.resumen.distrito;
+    assert.equal(d["2007"], 1834);
+    assert.equal(d["2026"], 1890);
+    assert.equal(d.creado, 56);
+    assert.equal(d.reasignado, 2);
+    assert.equal(d.renombrado, 15);
+    assert.equal(d.sin_par_2026, 0);
+    assert.equal(d.creado + d.reasignado, 58);
+  });
+
+  it("Putumayo cambió de código; Mi Perú no tiene par 2007", () => {
+    assert.equal(ubigeoEquivalente(tabla, "160109", "2007"), "160801");
+    assert.equal(ubigeoEquivalente(tabla, "070107", "2026"), null);
+    assert.equal(contenedorGeometrico(tabla, "070107"), "070106");
+    const pueblo = cruceUbigeo(tabla, "150121", "2026");
+    assert.equal(pueblo.tipo, "renombrado");
+    assert.equal(pueblo.nombre_2007, "magdalena vieja");
+    assert.equal(cambiosUbigeo(tabla).length, 76);
+  });
+});
+
+describe("espacial por distrito", () => {
+  const tabla = leer("espacial/distritos.json");
+  const geo = leer("indicadores/geometria.json");
+
+  it("reusa el centroide y repara La Punta sin inventar islas", () => {
+    assert.equal(tabla.meta.n, 1890);
+    assert.deepEqual(tabla.distritos["150101"].centroide, geo.niveles.distrital["150101"].centroide);
+    assert.ok(vecinosDe(tabla, "070105").includes("070101"));
+    assert.deepEqual(vecinosDe(tabla, "210103"), []);
+    assert.deepEqual(vecinosDe(tabla, "211302"), []);
+    const cota = altitudCentroide(tabla, "150101");
+    assert.equal(typeof cota, "number");
+    assert.ok(cota > 0 && cota < 500);
   });
 });
