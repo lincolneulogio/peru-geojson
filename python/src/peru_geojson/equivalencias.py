@@ -26,14 +26,6 @@ class FilaEquivalencia(TypedDict):
     contenedor_metodo: MetodoContenedor | None
 
 
-class ResumenEquivalencias(TypedDict):
-    estable: int
-    renombrado: int
-    reasignado: int
-    creado: int
-    sin_par_2026: int
-
-
 class TablaEquivalencias(TypedDict):
     meta: dict[str, object]
     resumen: dict[str, dict[str, int]]

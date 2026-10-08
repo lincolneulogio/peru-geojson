@@ -7,6 +7,9 @@ viewer/.next/
 .next/
 sources/
 scripts/__pycache__/
+python/dist/
+python/src/*.egg-info/
+python/**/__pycache__/
 data/espacial/altitud-centroide.json
 scripts/_inspect_gpkg.py
 scripts/_inspect_meta.py
