@@ -10,7 +10,13 @@
     "variants": "pnpm --filter peru-geojson variants",
     "shapefile": "pnpm --filter peru-geojson shapefile",
     "datos": "pnpm normalize && pnpm derive && pnpm validate && pnpm variants",
+    "version:congelar": "python scripts/congelar_version.py",
+    "version:comprobar": "python scripts/congelar_version.py --comprobar",
+    "equivalencias": "python scripts/equivalencias_ubigeo.py",
+    "espacial": "python scripts/espacial_distrito.py",
+    "sync": "node scripts/sync-package-data.mjs",
     "build": "pnpm --filter peru-geojson build",
-    "test": "pnpm --filter peru-geojson test"
+    "test": "pnpm --filter peru-geojson test",
+    "test:py": "python -m unittest discover -s python/tests -v"
   }
 }

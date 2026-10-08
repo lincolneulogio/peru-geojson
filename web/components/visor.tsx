@@ -2,12 +2,21 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { BusquedaUbigeo } from "@/components/busqueda-ubigeo";
+import { Cabecera } from "@/components/cabecera";
+import { ConmutadorProveedor } from "@/components/conmutador-proveedor";
 import { FichaUbigeo } from "@/components/ficha-ubigeo";
-import { MapaPeru } from "@/components/mapa-peru";
+import { MapaPeru } from "@/components/mapa/mapa-peru";
 import { SelectorUbigeo } from "@/components/selector-ubigeo";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { useCatalogo } from "@/hooks/use-catalogo";
+import { useTema } from "@/hooks/use-tema";
+import type { ConteosVersion } from "@/lib/datos/versiones";
+import type { ProveedorMapa } from "@/lib/mapa/tipos";
 import type { UbigeoResource } from "@/lib/recursos/ubigeo";
+
+interface VisorProps {
+  anio: string;
+  conteos: ConteosVersion;
+}
 
 function capaVisible(dep: string, prov: string): string {
   if (prov) return `/api/geo/distritos?prov=${prov}`;
@@ -25,16 +34,23 @@ function aOpciones(registros: UbigeoResource[]) {
   return registros.map((item) => ({ ubigeo: item.ubigeo, nombre: item.nombre }));
 }
 
-export function Visor() {
-  const [oscuro, setOscuro] = useState(false);
+export function Visor({ anio, conteos }: VisorProps) {
+  const [oscuro, setOscuro] = useTema();
+  const [proveedor, setProveedor] = useState<ProveedorMapa>("maplibre");
   const [dep, setDep] = useState("");
   const [prov, setProv] = useState("");
   const [dist, setDist] = useState("");
   const catalogo = useCatalogo(dep, prov);
 
   useEffect(() => {
-    setOscuro(document.documentElement.classList.contains("dark"));
+    const guardado = localStorage.getItem("mapa-proveedor");
+    if (guardado === "leaflet" || guardado === "maplibre") setProveedor(guardado);
   }, []);
+
+  function cambiarProveedor(valor: ProveedorMapa) {
+    localStorage.setItem("mapa-proveedor", valor);
+    setProveedor(valor);
+  }
 
   const seleccionado = dist || prov || dep;
   const registro = useMemo(() => {
@@ -54,15 +70,9 @@ export function Visor() {
 
   return (
     <div className="flex min-h-dvh flex-col">
-      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-200 px-4 py-3 md:px-6 dark:border-stone-800">
-        <div>
-          <p className="text-xs font-semibold tracking-[0.18em] text-teal-800 uppercase dark:text-teal-300">
-            IDE-INEI · EPSG:4326
-          </p>
-          <h1 className="text-lg font-semibold tracking-tight md:text-xl">Perú GeoJSON</h1>
-        </div>
-        <ThemeToggle oscuro={oscuro} onChange={setOscuro} />
-      </header>
+      <Cabecera anio={anio} oscuro={oscuro} onTema={setOscuro}>
+        <ConmutadorProveedor valor={proveedor} onChange={cambiarProveedor} />
+      </Cabecera>
       <div className="flex flex-1 flex-col md:flex-row">
         <aside className="flex w-full flex-col gap-4 border-stone-200 p-4 md:w-[23rem] md:border-r md:p-5 dark:border-stone-800">
           <SelectorUbigeo
@@ -103,12 +113,19 @@ export function Visor() {
           {catalogo.error ? <p className="text-sm text-red-700 dark:text-red-300">{catalogo.error}</p> : null}
           <FichaUbigeo registro={registro} descarga={enlaceDescarga(dep, prov)} />
           <p className="text-xs leading-relaxed text-stone-500 dark:text-stone-400">
-            25 departamentos, 196 provincias y 1890 distritos. Geometría simplificada a 0.0005°
-            para la web. Los archivos originales del repositorio no cambian.
+            {conteos.departamentos} departamentos, {conteos.provincias} provincias y {conteos.distritos} distritos.
+            Edición cartográfica {anio}. El motor del mapa se puede cambiar entre MapLibre y Leaflet; los dos leen la
+            misma API.
           </p>
         </aside>
         <div className="relative min-h-[55dvh] flex-1">
-          <MapaPeru url={capaVisible(dep, prov)} seleccionado={seleccionado} oscuro={oscuro} onSelect={elegirUbigeo} />
+          <MapaPeru
+            proveedor={proveedor}
+            url={capaVisible(dep, prov)}
+            seleccionado={seleccionado}
+            oscuro={oscuro}
+            onSelect={elegirUbigeo}
+          />
         </div>
       </div>
     </div>

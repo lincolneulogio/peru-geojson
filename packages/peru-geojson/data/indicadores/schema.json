@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Indicadores por ubigeo",
+  "type": "object",
+  "required": [
+    "meta",
+    "registros"
+  ],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": [
+        "estado"
+      ],
+      "properties": {
+        "estado": {
+          "enum": [
+            "pendiente-oficial",
+            "oficial",
+            "demo-sintetico"
+          ]
+        }
+      }
+    },
+    "registros": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "poblacion",
+          "hogares"
+        ],
+        "properties": {
+          "poblacion": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "hogares": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "pobreza_pct": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "idh": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "anio": {
+            "type": "integer"
+          },
+          "sintetico": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

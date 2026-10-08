@@ -146,14 +146,65 @@ const provincias = feature(topo, topo.objects.peru);
 
 ## Visor y API
 
-Aplicación Next.js (App Router, Server Components donde basta, Tailwind, modo oscuro, MapLibre) en `web/`.
+Una sola aplicación Next.js en `web/` (App Router, Tailwind, modo oscuro). Es la que construye el CI. El mapa conmuta entre **MapLibre** y **Leaflet** sin cambiar la API ni el catálogo.
 
 ```bash
 pnpm install
 pnpm --filter peru-geojson-visor dev
 ```
 
-El selector baja de departamento a provincia y a distrito. La búsqueda acepta ubigeo o nombre. La descarga devuelve solo el ámbito visible.
+El selector baja de departamento a provincia y a distrito. La búsqueda acepta ubigeo o nombre. La descarga devuelve solo el ámbito visible. En `/pintar` se pega un CSV de ubigeos y el mapa se colorea con las teselas PMTiles.
+
+## PMTiles en el CDN
+
+El archivo `data/variants/peru-ubigeo.pmtiles` (MVT, zooms 0–10, capas `departamentos`, `provincias` y `distritos`, campos `ubigeo` y `nombre`) se publica en dos sitios:
+
+| Dónde | URL |
+| --- | --- |
+| App (Range) | `/pmtiles` |
+| jsDelivr | `https://cdn.jsdelivr.net/gh/lincolneulogio/peru-geojson@master/data/variants/peru-ubigeo.pmtiles` |
+
+jsDelivr responde `Range`, que es lo que exige el protocolo. El sha256 del archivo está en `data/v2023/MANIFEST.json`.
+
+```html
+<script src="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/pmtiles@4/dist/pmtiles.js"></script>
+<script>
+  const protocolo = new pmtiles.Protocol();
+  maplibregl.addProtocol("pmtiles", protocolo.tile);
+  const mapa = new maplibregl.Map({
+    container: "mapa",
+    style: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
+    bounds: [[-81.328195, -18.350928], [-68.652279, -0.038606]]
+  });
+  mapa.on("load", () => {
+    mapa.addSource("peru", {
+      type: "vector",
+      url: "pmtiles://https://cdn.jsdelivr.net/gh/lincolneulogio/peru-geojson@master/data/variants/peru-ubigeo.pmtiles"
+    });
+    mapa.addLayer({ id: "dep", type: "fill", source: "peru", "source-layer": "departamentos", paint: { "fill-color": "#0f766e", "fill-opacity": 0.45 } });
+  });
+</script>
+```
+
+## Versiones anuales
+
+El INEI actualiza los límites. Cada edición queda en `data/vYYYY/MANIFEST.json` con el sha256 de los GeoJSON, TopoJSON, PMTiles y el índice. Los bytes siguen en las rutas canónicas: son la edición vigente. El catálogo está en `data/versiones.json` (`actual` hoy es `2023`).
+
+```bash
+python scripts/congelar_version.py --comprobar
+python scripts/congelar_version.py --actualizar
+```
+
+`--comprobar` es el paso del CI. Si los bytes cambian, el pin no se reescribe solo: hay que pasar `--actualizar` en el mismo año, o publicar `data/v2024` cuando el reporte de normalización declare límites de 2024 (`--establecer-actual` mueve `actual`).
+
+| Ruta | Respuesta |
+| --- | --- |
+| `GET /api/versiones` | Catálogo de ediciones |
+| `GET /api/versiones/2023` | Manifiesto con sha256 |
+| `GET /pintar` | Playground: CSV de ubigeos sobre PMTiles |
+
+La API del catálogo:
 
 | Ruta | Respuesta |
 | --- | --- |
@@ -188,7 +239,7 @@ pnpm validate
 
 `validate_geojson.py` revisa el contrato (ubigeo único, anillos cerrados, `bbox`, sin `crs`) y, con las dependencias de Node instaladas, pasa cada archivo por `@mapbox/geojsonhint`.
 
-GitHub Actions (`.github/workflows/validar.yml`) hace esa validación y además `tsc` y `next build` del visor en cada pull request.
+GitHub Actions (`.github/workflows/validar.yml`) hace esa validación, comprueba el pin `data/v2023` y además `tsc` y `next build` del visor en cada pull request.
 
 ## Licencia
 
@@ -204,4 +255,4 @@ pnpm --filter peru-geojson shapefile -- --input limite.shp --nivel distrital --o
 pnpm --filter peru-geojson shapefile -- --input limite.shp --list-fields
 ```
 
-`pnpm variants` lee los preview y escribe `data/variants/`: GeoJSON light, un TopoJSON y un PMTiles. El visor en `web/` usa el light si existe y, si no, el preview.
+`pnpm variants` lee los preview y escribe `data/variants/`: GeoJSON light, un TopoJSON y un PMTiles. El visor en `web/` usa el light si existe y, si no, el preview. El playground `/pintar` usa el PMTiles.

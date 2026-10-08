@@ -17,6 +17,12 @@ export const consultaBusqueda = z.object({
   q: z.string().trim().min(2).max(80),
 });
 
+export const consultaReverse = z.object({
+  lat: z.coerce.number().min(-90).max(90),
+  lng: z.coerce.number().min(-180).max(180),
+  cercano: z.enum(["0", "1"]).optional(),
+});
+
 export const consultaDescarga = z.object({
   nivel: z.enum(["departamental", "provincial", "distrital", "capitales"]),
   ubigeo: z.string().regex(/^\d{2,6}$/).optional(),

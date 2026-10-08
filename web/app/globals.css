@@ -37,3 +37,24 @@ body {
 .dark .maplibregl-ctrl-group button + button {
   border-top-color: #44403c;
 }
+
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  background: #e7e5e4;
+  font-family: inherit;
+}
+
+.dark .leaflet-container {
+  background: #1c1917;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 0.85rem;
+}
+
+.dark .leaflet-popup-content-wrapper,
+.dark .leaflet-popup-tip {
+  background: #1c1917;
+  color: #fafaf9;
+}

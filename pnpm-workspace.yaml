@@ -1,6 +1,5 @@
 packages:
   - "packages/*"
-  - "viewer"
   - "web"
 allowBuilds:
   esbuild: true

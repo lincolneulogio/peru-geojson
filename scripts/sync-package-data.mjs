@@ -14,6 +14,7 @@ const base = path.resolve(root, "..", "data");
 const dst = path.resolve(root, "..", "packages", "peru-geojson", "data");
 
 await fs.mkdir(dst, { recursive: true });
+await fs.mkdir(path.join(dst, "nombres"), { recursive: true });
 
 const COPIAS = [
   [derived, "peru-departamental.min.geojson"],
@@ -25,9 +26,24 @@ const COPIAS = [
   [validated, "reporte.validacion.json"],
 ];
 
+const COPIAS_DIR = [
+  ["indicadores", ["geometria.json", "sociodemograficos.json", "demo-sintetico.json", "schema.json"]],
+  ["nombres", ["sobreescrituras.json", "gentilicios.json"]],
+  ["equivalencias", ["ubigeo-2007-2026.json", "cambios-2007-2026.csv"]],
+  ["espacial", ["distritos.json"]],
+];
+
 for (const [dir, file] of COPIAS) {
   await fs.copyFile(path.join(dir, file), path.join(dst, file));
   console.log("sync:", file);
+}
+
+for (const [sub, files] of COPIAS_DIR) {
+  await fs.mkdir(path.join(dst, sub), { recursive: true });
+  for (const file of files) {
+    await fs.copyFile(path.join(base, sub, file), path.join(dst, sub, file));
+    console.log("sync:", `${sub}/${file}`);
+  }
 }
 
 const RESTOS_V2 = [

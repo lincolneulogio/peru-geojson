@@ -3,12 +3,17 @@ import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 import {
+  aNombreOficial,
   buscarPorNombre,
+  coberturaIndicadores,
   esUbigeoValido,
   filtrarFeatures,
+  gentilicio,
+  joinIndicadores,
   nivelDeUbigeo,
   normalizarTexto,
   perteneceA,
+  reverseGeocode,
   ubigeoPadre,
 } from "../dist/index.js";
 
@@ -70,5 +75,70 @@ describe("datos sincronizados (IDE-INEI 2023)", () => {
     assert.equal(idx.departamentos.length, 25);
     assert.equal(idx.provincias.length, 196);
     assert.equal(idx.distritos.length, 1890);
+  });
+});
+
+describe("indicadores (left join honesto)", () => {
+  const features = [
+    { type: "Feature", properties: { ubigeo: "150101" }, geometry: null },
+    { type: "Feature", properties: { ubigeo: "150102" }, geometry: null },
+  ];
+  const tabla = {
+    meta: { estado: "demo-sintetico" },
+    registros: { 150101: { poblacion: 1000, hogares: 300 } },
+  };
+
+  it("une sin mutar y deja null donde no hay dato", () => {
+    const unido = joinIndicadores(features, tabla);
+    assert.equal(features[0].properties.indicadores, undefined);
+    assert.equal(unido[0].properties.indicadores.poblacion, 1000);
+    assert.equal(unido[1].properties.indicadores, null);
+  });
+
+  it("mide cobertura", () => {
+    assert.deepEqual(coberturaIndicadores(features, tabla), { total: 2, conDatos: 1, pct: 0.5 });
+  });
+
+  it("geometría real: Cercado de Lima ≈ 21.6 km²", () => {
+    const geo = leer("indicadores/geometria.json");
+    const lima = geo.niveles.distrital["150101"];
+    assert.ok(Math.abs(lima.area_km2 - 21.6) < 1.5);
+    assert.deepEqual(leer("indicadores/sociodemograficos.json").registros, {});
+  });
+});
+
+describe("geocodificación inversa", () => {
+  const distrital = leer("peru-distrital.min.geojson").features;
+
+  it("Plaza de Armas de Lima cae en Lima cercado", () => {
+    const r = reverseGeocode(distrital, { lng: -77.0318, lat: -12.0458 });
+    assert.ok(r && r.exacto);
+    assert.ok(r.ubigeo.startsWith("1501"));
+  });
+
+  it("punto en el mar retorna null sin fallback", () => {
+    const r = reverseGeocode(distrital, { lng: -90, lat: -20 });
+    assert.equal(r, null);
+  });
+});
+
+describe("nombres oficiales", () => {
+  const overrides = leer("nombres/sobreescrituras.json").sobreescrituras;
+  const gent = leer("nombres/gentilicios.json");
+
+  it("override verificado gana", () => {
+    assert.equal(aNombreOficial("san martin de porres", overrides), "San Martín de Porres");
+    assert.equal(aNombreOficial("ancash", overrides), "Áncash");
+  });
+
+  it("reglas: conectores y romanos", () => {
+    assert.equal(aNombreOficial("santa rosa de lima", {}), "Santa Rosa de Lima");
+    assert.equal(aNombreOficial("carmen de la legua reynoso", {}), "Carmen de la Legua Reynoso");
+  });
+
+  it("gentilicio verificado o null, nunca inventa", () => {
+    assert.equal(gentilicio("lima", gent), "limeño");
+    assert.equal(gentilicio("madre de dios", gent), null);
+    assert.equal(gentilicio("inventado", gent), null);
   });
 });

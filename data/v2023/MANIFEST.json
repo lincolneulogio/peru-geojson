@@ -1,0 +1,181 @@
+{
+  "id": "2023",
+  "anio_cartografico": 2023,
+  "etiqueta": "IDE-INEI, actualización 2023",
+  "fuente": "IDE-INEI https://ide.inei.gob.pe/files/{Departamento,Provincia,Distrito}.rar",
+  "descarga_last_modified": "2026-03-06",
+  "portal": "Límites departamental, provincial y distrital actualizados al 2023 (ide.inei.gob.pe)",
+  "crs": "EPSG:4326",
+  "licencia": "CC-BY-4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by/4.0/",
+  "congelado_en": "2026-10-08",
+  "almacen": "canonico",
+  "conteos": {
+    "departamentos": 25,
+    "provincias": 196,
+    "distritos": 1890,
+    "capitales": 194
+  },
+  "bbox": [
+    -81.328195,
+    -18.350928,
+    -68.652279,
+    -0.038606
+  ],
+  "nota": "Los bytes de esta edición viven en las rutas listadas. Este manifiesto es el pin auditable. Publicar otro año no lo reescribe.",
+  "cdn": {
+    "pmtiles": "https://cdn.jsdelivr.net/gh/lincolneulogio/peru-geojson@master/data/variants/peru-ubigeo.pmtiles"
+  },
+  "artefactos": [
+    {
+      "id": "validado-departamental",
+      "ruta": "data/validated/peru-departamental.validated.geojson",
+      "bytes": 1468257,
+      "sha256": "a5791797a68f4ead2a40a2b054ad57b967700839b5d054681096a9df553e6c50"
+    },
+    {
+      "id": "validado-provincial",
+      "ruta": "data/validated/peru-provincial.validated.geojson",
+      "bytes": 3363584,
+      "sha256": "511a53e00302342a73b3e86eccebbec23c03eee88b38571c7e899add9d854e3c"
+    },
+    {
+      "id": "validado-distrital",
+      "ruta": "data/validated/peru-distrital.validated.geojson",
+      "bytes": 8691824,
+      "sha256": "e0f3e5c6217adfd0f37ff7c83a91f7f0416dee91a2396ab729595adc7a7cad66"
+    },
+    {
+      "id": "validado-capitales",
+      "ruta": "data/validated/peru-capitales.validated.geojson",
+      "bytes": 81575,
+      "sha256": "ca5a19b9b2558e7b0e47756766907a1c72ac398070a36df6b435618e20768ee3"
+    },
+    {
+      "id": "min-departamental",
+      "ruta": "data/derived/peru-departamental.min.geojson",
+      "bytes": 1465775,
+      "sha256": "6e46f9dc05c6a3f9ebe028c90d91eaac6c91ce26bce2e659ae155e646c75aaa3"
+    },
+    {
+      "id": "min-provincial",
+      "ruta": "data/derived/peru-provincial.min.geojson",
+      "bytes": 3324496,
+      "sha256": "1e7611898b62073381f271a5322dcb7c0719c3b132385731b5ac7dd8a4ed4802"
+    },
+    {
+      "id": "min-distrital",
+      "ruta": "data/derived/peru-distrital.min.geojson",
+      "bytes": 8157684,
+      "sha256": "763f0da8914e2b167d963a0566f5981150f6476ecd118107c78245e5a4f959ca"
+    },
+    {
+      "id": "min-capitales",
+      "ruta": "data/derived/peru-capitales.min.geojson",
+      "bytes": 47104,
+      "sha256": "8c0a2ea4e7b61a0d9d182310c165c035b9b64dfce4e862facc4742775d54d2b2"
+    },
+    {
+      "id": "preview-departamental",
+      "ruta": "data/derived/peru-departamental.preview.geojson",
+      "bytes": 256114,
+      "sha256": "751c5e2855a2f1e62f2953fd6e06017d55492d1d3fb613efc933103006ba2840"
+    },
+    {
+      "id": "preview-provincial",
+      "ruta": "data/derived/peru-provincial.preview.geojson",
+      "bytes": 622036,
+      "sha256": "d6acb4be903451b3f0606fd3eb6f77a6d185c347e4bddba0b2f14293c471e688"
+    },
+    {
+      "id": "preview-distrital",
+      "ruta": "data/derived/peru-distrital.preview.geojson",
+      "bytes": 1863036,
+      "sha256": "9036be676403a95df938df297c9bdebf76603fef9232812f7b9ba18b7f4fe9f1"
+    },
+    {
+      "id": "preview-capitales",
+      "ruta": "data/derived/peru-capitales.preview.geojson",
+      "bytes": 47108,
+      "sha256": "0b8c3fd40f8371bb518318e41066fc9f85c9160d3b463145fa12acee0b89e9e3"
+    },
+    {
+      "id": "topojson-departamental",
+      "ruta": "data/derived/peru-departamental.topojson",
+      "bytes": 484156,
+      "sha256": "df45e042732f82c1548cfda93b10a94874db81862b85ab9efd0bcce3f0f4b0fd"
+    },
+    {
+      "id": "topojson-provincial",
+      "ruta": "data/derived/peru-provincial.topojson",
+      "bytes": 1145163,
+      "sha256": "9bdc56cac6cb8b01da7f8092a7647ddd48b1e1d81729bdde4a9546e233e162d1"
+    },
+    {
+      "id": "topojson-distrital",
+      "ruta": "data/derived/peru-distrital.topojson",
+      "bytes": 3531346,
+      "sha256": "97b54ce9133fcfd10caad8b4aefb4e71218099ce29e6e0af0a0b9509c22eb4f2"
+    },
+    {
+      "id": "topojson-capitales",
+      "ruta": "data/derived/peru-capitales.topojson",
+      "bytes": 40467,
+      "sha256": "0c7c6cbaed3fa9d59404f8b87f1a917bc9688710c46b5960e096bb8620dcb3d6"
+    },
+    {
+      "id": "light-departamentos",
+      "ruta": "data/variants/light/departamentos.geojson",
+      "bytes": 97280,
+      "sha256": "758208415681cffbea674ea75ea26fb60112288afb6ecdd42e679fc7a29d8131"
+    },
+    {
+      "id": "light-provincias",
+      "ruta": "data/variants/light/provincias.geojson",
+      "bytes": 455080,
+      "sha256": "c028d76997af1cb0394e4c1efa5221198033c7adfd01b4c651c738e8c0996ec9"
+    },
+    {
+      "id": "light-distritos",
+      "ruta": "data/variants/light/distritos.geojson",
+      "bytes": 1632522,
+      "sha256": "59ad7be4366c620d510e3e50dc12389743bcaae2a9fa356b039df200d32ce026"
+    },
+    {
+      "id": "light-capitales",
+      "ruta": "data/variants/light/capitales.geojson",
+      "bytes": 46581,
+      "sha256": "35a39fdb63ce894685dd06e5223b82a7e7959ca910ac358d8f0a6258f3a4ec38"
+    },
+    {
+      "id": "topojson",
+      "ruta": "data/variants/peru.topojson",
+      "bytes": 1479406,
+      "sha256": "3d9d859b05b7c9d48c86cbf50d2eb2d5901368c8c24dff8d372a5415b29bd79e"
+    },
+    {
+      "id": "pmtiles",
+      "ruta": "data/variants/peru-ubigeo.pmtiles",
+      "bytes": 1596599,
+      "sha256": "96c5a8e0c6e076c88ed2b6d7bb17df509e5c6daf0429f30be7e4baeb5a5dc211"
+    },
+    {
+      "id": "indice",
+      "ruta": "data/ubigeo.json",
+      "bytes": 844926,
+      "sha256": "2f743b1ca0f2db90b6f5cb2d7e500355198c162b7d07085452d78b7b1e54350f"
+    },
+    {
+      "id": "reporte-normalizacion",
+      "ruta": "data/validated/reporte.json",
+      "bytes": 2148,
+      "sha256": "ff9c9311a137c37e1bd595b29994152a6f94bd42256bd942dd9a2c61b357275f"
+    },
+    {
+      "id": "reporte-validacion",
+      "ruta": "data/validated/reporte.validacion.json",
+      "bytes": 452,
+      "sha256": "44d22745cd7a14caa6b033dcfefec0c35a738bd47067518f5c1bd957d39071b5"
+    }
+  ]
+}

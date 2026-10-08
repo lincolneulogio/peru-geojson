@@ -1,0 +1,18 @@
+{
+  "actual": "2023",
+  "politica": "Cada año cartográfico del INEI se publica como data/vYYYY/MANIFEST.json. Ese manifiesto fija el sha256 de los artefactos canónicos. El CI rechaza bytes que no coincidan con el pin. Una edición nueva no reescribe el manifiesto anterior: se agrega data/vYYYY y, con --establecer-actual, se cambia actual.",
+  "versiones": [
+    {
+      "id": "2023",
+      "anio_cartografico": 2023,
+      "etiqueta": "IDE-INEI, actualización 2023",
+      "manifiesto": "data/v2023/MANIFEST.json",
+      "conteos": {
+        "departamentos": 25,
+        "provincias": 196,
+        "distritos": 1890,
+        "capitales": 194
+      }
+    }
+  ]
+}

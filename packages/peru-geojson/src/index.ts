@@ -63,3 +63,43 @@ export type {
   Provincia as ProvinciaRegistro,
   RegistroUbigeo,
 } from "./contrato.js";
+export {
+  coberturaIndicadores,
+  joinIndicadores,
+  loadIndicadoresDemo,
+  loadIndicadoresGeo,
+  loadIndicadoresSocio,
+} from "./indicadores.js";
+export type {
+  EstadoIndicadores,
+  IndicadorGeometrico,
+  IndicadorSociodemografico,
+  TablaGeometria,
+  TablaIndicadores,
+} from "./indicadores.js";
+export { puntoEnAnillo, puntoEnPoligono, reverseGeocode } from "./geo.js";
+export type { Punto, ResultadoInverso } from "./geo.js";
+export { aNombreOficial, gentilicio, loadNombres } from "./nombres.js";
+export type { TablasNombres } from "./nombres.js";
+export {
+  cambiosUbigeo,
+  contenedorGeometrico,
+  cruceUbigeo,
+  loadEquivalencias,
+  ubigeoEquivalente,
+} from "./equivalencias.js";
+export type {
+  FilaEquivalencia,
+  LadoUbigeo,
+  MetodoContenedor,
+  ResumenEquivalencias,
+  TablaEquivalencias,
+  TipoCambioUbigeo,
+} from "./equivalencias.js";
+export {
+  altitudCentroide,
+  loadEspacialDistritos,
+  registroEspacial,
+  vecinosDe,
+} from "./espacial.js";
+export type { RegistroEspacialDistrito, TablaEspacialDistritos } from "./espacial.js";

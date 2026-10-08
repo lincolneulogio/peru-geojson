@@ -5,5 +5,9 @@ function origen(): string {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [{ url: origen(), lastModified: new Date(), changeFrequency: "monthly", priority: 1 }];
+  const base = origen();
+  return [
+    { url: base, lastModified: new Date(), changeFrequency: "monthly", priority: 1 },
+    { url: `${base}/pintar`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+  ];
 }

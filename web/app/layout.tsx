@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 const descripcion =
-  "Visor de departamentos, provincias y distritos del Perú. GeoJSON light, TopoJSON y PMTiles. Límites IDE-INEI, API de ubigeo y licencia CC BY 4.0.";
+  "Visor de departamentos, provincias y distritos del Perú. GeoJSON, PMTiles y playground para pintar por CSV de ubigeos. Límites IDE-INEI 2023, API de ubigeo y licencia CC BY 4.0.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),

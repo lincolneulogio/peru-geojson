@@ -1,0 +1,50 @@
+[project]
+name = "peru-geojson"
+version = "2.1.0"
+description = "Limites del Peru (IDE-INEI / IDEP), cruce de ubigeos 2007-2026 y vecindad distrital. Mismo contrato que el paquete TypeScript."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+keywords = ["peru", "ubigeo", "geojson", "geopandas", "inei"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Typing :: Typed",
+]
+dependencies = []
+
+[project.optional-dependencies]
+gis = ["geopandas>=0.14"]
+
+[project.urls]
+Homepage = "https://github.com/lincolneulogio/peru-geojson"
+Source = "https://github.com/lincolneulogio/peru-geojson"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/peru_geojson"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"../data/ubigeo.json" = "peru_geojson/data/ubigeo.json"
+"../data/derived/peru-departamental.min.geojson" = "peru_geojson/data/derived/peru-departamental.min.geojson"
+"../data/derived/peru-provincial.min.geojson" = "peru_geojson/data/derived/peru-provincial.min.geojson"
+"../data/derived/peru-distrital.min.geojson" = "peru_geojson/data/derived/peru-distrital.min.geojson"
+"../data/derived/peru-capitales.min.geojson" = "peru_geojson/data/derived/peru-capitales.min.geojson"
+"../data/equivalencias/ubigeo-2007-2026.json" = "peru_geojson/data/equivalencias/ubigeo-2007-2026.json"
+"../data/equivalencias/cambios-2007-2026.csv" = "peru_geojson/data/equivalencias/cambios-2007-2026.csv"
+"../data/espacial/distritos.json" = "peru_geojson/data/espacial/distritos.json"
+"../data/indicadores/geometria.json" = "peru_geojson/data/indicadores/geometria.json"
+"../data/indicadores/sociodemograficos.json" = "peru_geojson/data/indicadores/sociodemograficos.json"
+"../data/indicadores/demo-sintetico.json" = "peru_geojson/data/indicadores/demo-sintetico.json"
+"../data/indicadores/schema.json" = "peru_geojson/data/indicadores/schema.json"
+"../data/nombres/sobreescrituras.json" = "peru_geojson/data/nombres/sobreescrituras.json"
+"../data/nombres/gentilicios.json" = "peru_geojson/data/nombres/gentilicios.json"
+
+[tool.hatch.build.targets.sdist.force-include]
+"../data/ubigeo.json" = "src/peru_geojson/data/ubigeo.json"
+"../data/equivalencias/ubigeo-2007-2026.json" = "src/peru_geojson/data/equivalencias/ubigeo-2007-2026.json"
+"../data/espacial/distritos.json" = "src/peru_geojson/data/espacial/distritos.json"

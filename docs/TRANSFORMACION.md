@@ -91,3 +91,13 @@ Lee `data/derived/*.preview.geojson` y escribe:
 `python scripts/validate_geojson.py` revisa tipo, `bbox`, ubigeo único, campos canónicos, anillos cerrados y ausencia de `crs` legacy. Si existe `node_modules`, además corre `@mapbox/geojsonhint`, el mismo motor que usa geojsonlint.
 
 El reporte queda en `data/validated/reporte.json` y `data/validated/reporte.validacion.json`.
+
+## Versión anual
+
+Después de validar:
+
+```bash
+python scripts/congelar_version.py --comprobar
+```
+
+El año sale de la frase «actualizados al YYYY» del reporte. El pin queda en `data/vYYYY/MANIFEST.json` y el índice en `data/versiones.json`. El detalle está en el README, sección «Versiones anuales».

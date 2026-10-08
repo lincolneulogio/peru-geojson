@@ -105,6 +105,27 @@ export function buscar(consulta: string): RegistroUbigeo[] {
     .slice(0, 40);
 }
 
+export function geometriaDistrital(): ColeccionUbigeo {
+  return cargar().geo.distrital;
+}
+
+export function registroPorUbigeo(ubigeo: string): RegistroUbigeo | null {
+  const indice = cargar().indice;
+  const todos = [...indice.departamentos, ...indice.provincias, ...indice.distritos];
+  return todos.find((item) => item.ubigeo === ubigeo) ?? null;
+}
+
+export function centroidesDistritales(): Record<string, [number, number]> {
+  const geo = JSON.parse(readFileSync(rutaDatos("indicadores", "geometria.json"), "utf8")) as {
+    niveles: { distrital: Record<string, { centroide: [number, number] }> };
+  };
+  const mapa: Record<string, [number, number]> = {};
+  for (const [ub, v] of Object.entries(geo.niveles.distrital)) {
+    mapa[ub] = v.centroide;
+  }
+  return mapa;
+}
+
 export type NivelGeo = "departamental" | "provincial" | "distrital" | "capitales";
 
 export function geoFiltrado(nivel: NivelGeo, ubigeo?: string): ColeccionUbigeo {

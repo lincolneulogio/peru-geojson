@@ -1,0 +1,13 @@
+{
+  "meta": {
+    "estado": "pendiente-oficial",
+    "fuentes_requeridas": [
+      "Censo Nacional 2017 (INEI)",
+      "ENAHO / Mapa de Pobreza (INEI)",
+      "IDH distrital (PNUD)"
+    ],
+    "formato_csv": "ubigeo,poblacion,hogares,pobreza_pct,idh,anio,fuente",
+    "cargador": "python scripts/importar_indicadores.py sources/indicadores/xxx.csv"
+  },
+  "registros": {}
+}

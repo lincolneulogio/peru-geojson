@@ -1,0 +1,77 @@
+nivel,tipo,ubigeo_2007,ubigeo_2026,nombre_2007,nombre_2026,nombre_departamento,nombre_provincia_2007,nombre_provincia_2026,campos,contenedor_2007,contenedor_metodo
+provincia,renombrado,1103,1103,nazca,nasca,ica,nazca,nasca,nombre_provincia,,
+provincia,creado,,1608,,putumayo,loreto,,putumayo,,,
+provincia,renombrado,2001,2001,puira,piura,piura,puira,piura,nombre_provincia,,
+distrito,renombrado,020109,020109,pampas,pampas grande,ancash,huaraz,huaraz,nombre_distrito,,
+distrito,creado,,030220,,jose maria arguedas,apurimac,,andahuaylas,,030201,centroide_dentro
+distrito,creado,,030609,,rocchacc,apurimac,,chincheros,,030606,centroide_dentro
+distrito,creado,,030610,,el porvenir,apurimac,,chincheros,,030606,centroide_dentro
+distrito,creado,,030611,,los chankas,apurimac,,chincheros,,030604,centroide_dentro
+distrito,creado,,030612,,ahuayro,apurimac,,chincheros,,030604,centroide_dentro
+distrito,creado,,050116,,andres avelino caceres dorregaray,ayacucho,,huamanga,,050101,centroide_dentro
+distrito,creado,,050409,,canayre,ayacucho,,huanta,,050408,centroide_dentro
+distrito,creado,,050410,,uchuraccay,ayacucho,,huanta,,050401,centroide_dentro
+distrito,creado,,050411,,pucacolpa,ayacucho,,huanta,,050402,centroide_dentro
+distrito,creado,,050412,,chaca,ayacucho,,huanta,,050406,centroide_dentro
+distrito,creado,,050413,,putis,ayacucho,,huanta,,050406,centroide_dentro
+distrito,creado,,050509,,samugari,ayacucho,,la mar,,050507,centroide_dentro
+distrito,creado,,050510,,anchihuay,ayacucho,,la mar,,050502,centroide_dentro
+distrito,creado,,050511,,oronccoy,ayacucho,,la mar,,050505,centroide_dentro
+distrito,creado,,050512,,union progreso,ayacucho,,la mar,,050502,centroide_dentro
+distrito,creado,,050513,,rio magdalena,ayacucho,,la mar,,050501,centroide_dentro
+distrito,creado,,050514,,ninabamba,ayacucho,,la mar,,050501,centroide_dentro
+distrito,creado,,050515,,patibamba,ayacucho,,la mar,,050501,centroide_dentro
+distrito,renombrado,051005,051005,canaria,canaria,ayacucho,victor fafardo,victor fajardo,nombre_provincia,,
+distrito,creado,,070107,,mi peru,callao,,callao,,070106,centroide_dentro
+distrito,creado,,080911,,inkawasi,cusco,,la convencion,,080909,centroide_dentro
+distrito,creado,,080912,,villa virgen,cusco,,la convencion,,080909,centroide_dentro
+distrito,creado,,080913,,villa kintiarina,cusco,,la convencion,,080907,centroide_dentro
+distrito,creado,,080914,,megantoni,cusco,,la convencion,,080902,centroide_dentro
+distrito,creado,,080915,,kumpirushiato,cusco,,la convencion,,080902,centroide_dentro
+distrito,creado,,080916,,cielo punco,cusco,,la convencion,,080907,centroide_dentro
+distrito,creado,,080917,,manitea,cusco,,la convencion,,080907,centroide_dentro
+distrito,creado,,080918,,union ashaninka,cusco,,la convencion,,080910,centroide_dentro
+distrito,creado,,090511,,cosme,huancavelica,,churcampa,,090502,centroide_dentro
+distrito,creado,,090719,,quichuas,huancavelica,,tayacaja,,090705,centroide_dentro
+distrito,creado,,090720,,andaymarca,huancavelica,,tayacaja,,090705,centroide_dentro
+distrito,creado,,090721,,roble,huancavelica,,tayacaja,,090718,centroide_dentro
+distrito,creado,,090722,,pichos,huancavelica,,tayacaja,,090709,centroide_dentro
+distrito,creado,,090723,,santiago de tucuma,huancavelica,,tayacaja,,090701,centroide_dentro
+distrito,creado,,090724,,lambras,huancavelica,,tayacaja,,090707,centroide_dentro
+distrito,creado,,090725,,cochabamba,huancavelica,,tayacaja,,090718,centroide_dentro
+distrito,renombrado,100106,100106,quisqui,quisqui (kichki),huanuco,huanuco,huanuco,nombre_distrito,,
+distrito,creado,,100112,,yacus,huanuco,,huanuco,,100105,centroide_dentro
+distrito,creado,,100113,,san pablo de pillao,huanuco,,huanuco,,100103,centroide_dentro
+distrito,renombrado,100602,100602,daniel alomias robles,daniel alomia robles,huanuco,leoncio prado,leoncio prado,nombre_distrito,,
+distrito,creado,,100607,,pucayacu,huanuco,,leoncio prado,,100604,centroide_dentro
+distrito,creado,,100608,,castillo grande,huanuco,,leoncio prado,,100601,centroide_dentro
+distrito,creado,,100609,,pueblo nuevo,huanuco,,leoncio prado,,100604,centroide_dentro
+distrito,creado,,100610,,santo domingo de anda,huanuco,,leoncio prado,,100604,centroide_dentro
+distrito,creado,,100704,,la morada,huanuco,,maranon,,100702,centroide_dentro
+distrito,creado,,100705,,santa rosa de alto yanajanca,huanuco,,maranon,,100702,centroide_dentro
+distrito,renombrado,110301,110301,nazca,nasca,ica,nazca,nasca,nombre_provincia|nombre_distrito,,
+distrito,renombrado,110302,110302,changuillo,changuillo,ica,nazca,nasca,nombre_provincia,,
+distrito,renombrado,110303,110303,el ingenio,el ingenio,ica,nazca,nasca,nombre_provincia,,
+distrito,renombrado,110304,110304,marcona,marcona,ica,nazca,nasca,nombre_provincia,,
+distrito,renombrado,110305,110305,vista alegre,vista alegre,ica,nazca,nasca,nombre_provincia,,
+distrito,creado,,120609,,vizcatan del ene,junin,,satipo,,120606,centroide_dentro
+distrito,renombrado,120906,120906,san juan de yscos,san juan de iscos,junin,chupaca,chupaca,nombre_distrito,,
+distrito,renombrado,131103,131103,compin,marmot,la libertad,gran chimu,gran chimu,nombre_distrito,,
+distrito,renombrado,150121,150121,magdalena vieja,pueblo libre,lima,lima,lima,nombre_distrito,,
+distrito,renombrado,151003,151003,ayauca,allauca,lima,yauyos,yauyos,nombre_distrito,,
+distrito,reasignado,160109,160801,putumayo,putumayo,loreto,maynas,putumayo,ubigeo|nombre_provincia,,
+distrito,creado,,160802,,rosa panduro,loreto,,putumayo,,160109,centroide_dentro
+distrito,reasignado,160114,160803,teniente manuel clavero,teniente manuel clavero,loreto,maynas,putumayo,ubigeo|nombre_provincia,,
+distrito,creado,,160804,,yaguas,loreto,,putumayo,,160109,centroide_dentro
+distrito,creado,,180107,,san antonio,moquegua,,mariscal nieto,,180101,centroide_dentro
+distrito,creado,,190308,,constitucion,pasco,,oxapampa,,190306,centroide_dentro
+distrito,renombrado,200110,200110,la union,la union,piura,puira,piura,nombre_provincia,,
+distrito,creado,,200115,,veintiseis de octubre,piura,,piura,,200101,centroide_dentro
+distrito,creado,,211105,,san miguel,puno,,san roman,,211101,centroide_dentro
+distrito,creado,,221006,,santa lucia,san martin,,tocache,,221005,centroide_dentro
+distrito,creado,,230111,,la yarada los palos,tacna,,tacna,,230101,centroide_dentro
+distrito,renombrado,250201,250201,raymondi,raimondi,ucayali,atalaya,atalaya,nombre_distrito,,
+distrito,creado,,250304,,neshuya,ucayali,,padre abad,,250302,centroide_dentro
+distrito,creado,,250305,,alexander von humboldt,ucayali,,padre abad,,250302,centroide_dentro
+distrito,creado,,250306,,huipoca,ucayali,,padre abad,,250301,centroide_dentro
+distrito,creado,,250307,,boqueron,ucayali,,padre abad,,250301,centroide_dentro

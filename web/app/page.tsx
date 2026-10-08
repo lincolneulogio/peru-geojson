@@ -1,4 +1,5 @@
 import { Visor } from "@/components/visor";
+import { edicionActual, leerVersiones } from "@/lib/datos/versiones";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -17,10 +18,11 @@ const jsonLd = {
 };
 
 export default function Page() {
+  const edicion = edicionActual(leerVersiones());
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <Visor />
+      <Visor anio={edicion.id} conteos={edicion.conteos} />
     </>
   );
 }
