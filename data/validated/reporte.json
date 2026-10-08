@@ -1,0 +1,67 @@
+{
+  "generado_en": "2026-10-08T08:40:45.353062+00:00",
+  "metodo": "GPKG IDE-INEI (EPSG:4326) -> WKB -> Douglas-Peucker -> 6 decimales -> anillos cerrados y orientación RFC 7946 -> deduplicado por ubigeo. Originales de la raíz intactos.",
+  "metadata": {
+    "fuente": "IDE-INEI https://ide.inei.gob.pe/files/{Departamento,Provincia,Distrito}.rar",
+    "descarga_last_modified": "2026-03-06",
+    "portal": "Límites departamental, provincial y distrital actualizados al 2023 (ide.inei.gob.pe)",
+    "atributo_fuente_gpkg": "V Censo Nacional Economico",
+    "crs": "EPSG:4326",
+    "rfc": "RFC 7946 (sin miembro crs; WGS84 implícito)",
+    "precision_decimales": 6,
+    "simplificacion_grados": 0.0005,
+    "simplificacion_preview_grados": 0.005,
+    "capitales": "El GPKG no incluye capital. Departamento: sede oficial. Provincia: union por nombre con peru_capital_provincia.geojson (IDEP-2016). Distrito: NOM_CAP de peru_distrital_simple.geojson cuando el ubigeo coincide.",
+    "generado_por": "scripts/normalize_geojson.py",
+    "compatibilidad": "Los archivos de la raíz no se modifican. En el validado, NOMBDEP, FIRST_IDDP, NOMBPROV, FIRST_IDPR, NOMBDIST, IDDIST, IDDPTO, IDPROV y NOM_CAP se conservan como alias."
+  },
+  "departamental": {
+    "entrada": 25,
+    "nulos": 0,
+    "duplicados": 0,
+    "degenerados": 0,
+    "validos": 25,
+    "errores": 0,
+    "bbox": [
+      -81.328195,
+      -18.350928,
+      -68.652279,
+      -0.038606
+    ]
+  },
+  "provincial": {
+    "entrada": 196,
+    "nulos": 0,
+    "duplicados": 0,
+    "degenerados": 0,
+    "validos": 196,
+    "errores": 0,
+    "bbox": [
+      -81.32823,
+      -18.350928,
+      -68.652279,
+      -0.038606
+    ],
+    "capitales_sin_dato": 0
+  },
+  "distrital": {
+    "entrada": 1890,
+    "nulos": 0,
+    "duplicados": 0,
+    "degenerados": 0,
+    "validos": 1890,
+    "errores": 0,
+    "bbox": [
+      -81.328195,
+      -18.350928,
+      -68.652279,
+      -0.038606
+    ],
+    "capitales_sin_dato": 58,
+    "capitales_historicas": 1834
+  },
+  "capitales": {
+    "validos": 194,
+    "fuente": "IDEP-2016"
+  }
+}

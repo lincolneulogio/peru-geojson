@@ -1,0 +1,14 @@
+node_modules/
+package-lock.json
+yarn.lock
+web/node_modules/
+web/.next/
+viewer/.next/
+.next/
+sources/
+scripts/__pycache__/
+scripts/_inspect_gpkg.py
+scripts/_inspect_meta.py
+scripts/_probe_geom.py
+*.pyc
+.DS_Store

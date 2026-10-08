@@ -1,0 +1,16 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Los archivos de datos de este repositorio se publican bajo CC BY 4.0:
+GeoJSON, TopoJSON, PMTiles, catálogos y derivados en data/.
+
+Texto legal: https://creativecommons.org/licenses/by/4.0/legalcode
+
+Debes dar crédito. Atribución:
+
+Instituto Nacional de Estadística e Informática (INEI).
+Límites departamentales, provinciales y distritales: IDE-INEI, actualización 2023.
+https://ide.inei.gob.pe/
+
+Capitales de provincia: Infraestructura de Datos Espaciales del Perú (IDEP), 2016.
+
+El código (visor, scripts y paquete TypeScript) está bajo MIT. Ver LICENSE.

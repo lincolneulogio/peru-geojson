@@ -1,0 +1,51 @@
+{
+  "name": "peru-geojson",
+  "version": "2.0.0",
+  "description": "Librería de límites del Perú (IDE-INEI / IDEP): departamentos, provincias, distritos y capitales. Tipada y sin dependencias de runtime.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "data",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./contrato": {
+      "types": "./dist/contrato.d.ts",
+      "import": "./dist/contrato.js",
+      "require": "./dist/contrato.cjs"
+    },
+    "./data/*": "./data/*",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsup",
+    "lint": "tsc --noEmit",
+    "test": "node --test test/core.test.mjs",
+    "variants": "node scripts/build-variants.mjs",
+    "shapefile": "node scripts/shapefile-to-geojson.mjs",
+    "derive": "node scripts/derive.mjs",
+    "prepublishOnly": "pnpm build"
+  },
+  "devDependencies": {
+    "@mapbox/geojsonhint": "3.2.0",
+    "@types/geojson": "7946.0.16",
+    "@types/node": "^20.19.0",
+    "geojson-vt": "^5.0.4",
+    "pmtiles": "^4.5.0",
+    "shapefile": "^0.6.6",
+    "topojson-client": "^3.1.0",
+    "topojson-server": "^3.0.1",
+    "tsup": "8.4.0",
+    "typescript": "^5.9.0",
+    "vt-pbf": "^3.1.3"
+  }
+}

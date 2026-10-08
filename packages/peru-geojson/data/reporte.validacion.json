@@ -1,0 +1,23 @@
+{
+  "archivos": {
+    "departamental": {
+      "archivo": "peru-departamental.validated.geojson",
+      "ok": true,
+      "errores": []
+    },
+    "provincial": {
+      "archivo": "peru-provincial.validated.geojson",
+      "ok": true,
+      "errores": []
+    },
+    "distrital": {
+      "archivo": "peru-distrital.validated.geojson",
+      "ok": true,
+      "errores": []
+    }
+  },
+  "ok": true,
+  "geojsonhint": [
+    "ok"
+  ]
+}

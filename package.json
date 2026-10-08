@@ -1,0 +1,16 @@
+{
+  "name": "peru-geojson-workspace",
+  "private": true,
+  "packageManager": "pnpm@11.24.0",
+  "description": "Limites administrativos del Peru en GeoJSON canonico.",
+  "scripts": {
+    "normalize": "python scripts/normalize_geojson.py",
+    "validate": "python scripts/validate_geojson.py",
+    "derive": "pnpm --filter peru-geojson derive",
+    "variants": "pnpm --filter peru-geojson variants",
+    "shapefile": "pnpm --filter peru-geojson shapefile",
+    "datos": "pnpm normalize && pnpm derive && pnpm validate && pnpm variants",
+    "build": "pnpm --filter peru-geojson build",
+    "test": "pnpm --filter peru-geojson test"
+  }
+}
